@@ -36,17 +36,17 @@ server.get('/api/users', (req, res) => {
 });
 
 //getting users by id
-server.get('/api/users/:id'),
-	(req, res) => {
-		Users.findById(id)
-			.then(users => {
-				res.status(200).json(users);
-			})
-			.catch(err => {
-				console.log(err);
-				res.status(500).json({ errorMessage: 'Cannot find specific user' });
-			});
-	};
+server.get('/api/users/:id', (req, res) => {
+	const { id } = req.params; //added <----
+	Users.findById(id)
+		.then(users => {
+			res.status(200).json(users);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({ errorMessage: 'Cannot find specific user' });
+		});
+});
 
 //add a new user
 server.post('/api/users', (req, res) => {
@@ -77,7 +77,7 @@ server.delete('/api/users/:id', (req, res) => {
 });
 
 //Updates user Information
-server.put('api/users/:id', (req, res) => {
+server.put('/api/users/:id', (req, res) => {
 	const newUser = req.body;
 	const { id } = req.params;
 	Users.update(id, newUser)
